@@ -1,17 +1,14 @@
 <?php
 session_start();
+if($_SESSION['username'] == 'username') {
+include "connect.php";
 
-if($_SESSION['username']== 'username') {
-	include "connect.php";
-
-	print("<html>");
-
-	$conn = connect_db();
-	$sql = "SELECT * FROM Addresses";
-	$result = mysqli_query($conn, $sql);
+print("<html>");
+$conn = connect_db();
+$sql = "SELECT * FROM Addresses";
+$result = mysqli_query($conn, $sql);
 
 if (mysqli_num_rows($result) > 0) {
-
 // output data of each row
 while($row = mysqli_fetch_assoc($result)) {
 echo $row["id"] . " ";
@@ -21,6 +18,7 @@ echo $row["zip"] . " ";
 echo $row["city"] . " ";
 echo $row["state"] . " ";
 echo $row["country"] . " ";
+echo "<a href=\"delete.php?id=" . $row["id"] . "\">DELETE</a>";
 print("<br>");
 }
 
@@ -28,6 +26,7 @@ print("<br>");
 echo "0 results";
 }
 
+print("<br><br>");
 print("</html>");
 mysqli_close($conn);
 
